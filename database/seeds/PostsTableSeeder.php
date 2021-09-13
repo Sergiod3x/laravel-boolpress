@@ -25,7 +25,7 @@ class PostsTableSeeder extends Seeder
         ];
         foreach($posts as $post) {
             $postObject=new Post();
-            $postObject->ap_partenza=$post['text'];
+            $postObject->text=$post['text'];
             $postObject->save();
         }
     }
