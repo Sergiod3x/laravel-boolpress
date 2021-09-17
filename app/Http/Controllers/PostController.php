@@ -41,6 +41,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        $validatedData = $request->validate([
+            'text' => 'required|unique:posts|max:50',
+        ]);
+
         $data = $request->all();//restituisce tutti i dati del form in un array associativo
         $newPost = new Post;
         $newPost->text = $data['text'];
