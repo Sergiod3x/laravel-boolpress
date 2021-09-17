@@ -30,5 +30,5 @@ Route::get('/public', 'PageController@publicSection')->name('public');
 
 Route::get('/private', 'PageController@privateSection')->name('private');
 
-Route::resource('posts','PostController');
+Route::resource('post','PostController');
 

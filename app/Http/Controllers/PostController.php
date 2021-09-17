@@ -22,26 +22,31 @@ class PostController extends Controller
         return view("posts.index", compact ('allPosts'));
         
     }
-
+ 
     /**
      * Show the form for creating a new resource.
-     *
+     *Mostra un form vuoto per popolare tutti i dati del nostro modello
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
+     *Riceve tutti i dati dsl form(dopo il submit) e salva i dati nel database
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();//restituisce tutti i dati del form in un array associativo
+        $newPost = new Post;
+        $newPost->text = $data['text'];
+        $newPost->save();
+        
+        return redirect()->route('post.show', $newPost->id);
     }
 
     /**
