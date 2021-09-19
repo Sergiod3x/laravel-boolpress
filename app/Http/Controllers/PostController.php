@@ -49,8 +49,10 @@ class PostController extends Controller
 
         $data = $request->all();//restituisce tutti i dati del form in un array associativo
         $newPost = new Post;
-        $newPost->text = $data['text'];
-        $newPost->save();
+
+        $this->filAndSavePost($newPost, $data);  //creo una funzione per caricare e salvare i dati in data
+        // $newPost->text = $data['text'];
+        // $newPost->save();
         
         return redirect()->route('post.show', $newPost->id);
     }
@@ -74,9 +76,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post) //autowire io do un id e lui recupera l'oggetto corrispondente dal db
     {
-        //
+        return view('posts.edit', compact('post'));
+        // dd($post);
     }
 
     /**
@@ -86,9 +89,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+        $this->filAndSavePost($post, $data); 
+
+        return redirect()->route('post.show', $post->id);
+        
     }
 
     /**
@@ -97,8 +104,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('post.index');
+    }
+
+    private function filAndSavePost($post, $data){
+        $post->text = $data['text'];
+        $post->save();
+    
     }
 }
+
