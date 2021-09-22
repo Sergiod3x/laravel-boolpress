@@ -32,3 +32,5 @@ Route::get('/private', 'PageController@privateSection')->name('private');
 
 Route::resource('post','PostController');
 
+Route::get('/app', 'WebAppController@home');
+
